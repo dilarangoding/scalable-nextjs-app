@@ -11,24 +11,20 @@ const ScalableApp = () => {
   const [activeInstances, setActiveInstances] = useState(2);
   const [requestCount, setRequestCount] = useState(0);
 
-  // Simulate increasing load
   const simulateLoad = () => {
     setRequestCount(prev => prev + 1);
     setServerLoad(prev => Math.min(prev + 15, 100));
     
-    // Auto-scaling logic
     if (serverLoad > 70 && activeInstances < 5) {
       setActiveInstances(prev => prev + 1);
       setServerLoad(prev => Math.max(prev - 30, 20));
     }
   };
 
-  // Simulate natural load decrease
   useEffect(() => {
     const timer = setInterval(() => {
       setServerLoad(prev => Math.max(prev - 5, 20));
       
-      // Scale down if load is low
       if (serverLoad < 30 && activeInstances > 2) {
         setActiveInstances(prev => prev - 1);
       }
@@ -48,7 +44,6 @@ const ScalableApp = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {/* Server Load */}
             <div>
               <div className="flex justify-between mb-2">
                 <span>Server Load</span>
@@ -57,19 +52,16 @@ const ScalableApp = () => {
               <Progress value={serverLoad} className="h-2" />
             </div>
 
-            {/* Active Instances */}
             <div className="flex items-center gap-4">
               <Server className="w-5 h-5" />
               <span>Active Instances: {activeInstances}</span>
             </div>
 
-            {/* Request Counter */}
             <div className="flex items-center gap-4">
               <AlertCircle className="w-5 h-5" />
               <span>Total Requests: {requestCount}</span>
             </div>
 
-            {/* Load Generator */}
             <Button 
               onClick={simulateLoad}
               className="w-full"
@@ -80,7 +72,6 @@ const ScalableApp = () => {
         </CardContent>
       </Card>
 
-      {/* Instance Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[...Array(activeInstances)].map((_, i) => (
           <Card key={i}>

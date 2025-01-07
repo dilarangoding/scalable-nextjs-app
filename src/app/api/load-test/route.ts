@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server'
 export async function GET() {
   const startTime = process.hrtime()
   
-  // Simulate processing
   await new Promise(resolve => setTimeout(resolve, 100))
   
   const diffTime = process.hrtime(startTime)
